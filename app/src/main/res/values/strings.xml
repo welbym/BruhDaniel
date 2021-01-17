@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Bruh Daniel</string>
+    <string name="bruh">bruh</string>
+    <string name="daniel">daniel</string>
+    <string name="switchBruh">Switch to Bruh</string>
+    <string name="switchDaniel">Switch to Daniel</string>
+
+</resources>
