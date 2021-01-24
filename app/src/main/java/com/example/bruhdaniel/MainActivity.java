@@ -27,10 +27,19 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView bruhImage = findViewById(R.id.bruh);
         ImageView danielImage = findViewById(R.id.daniel);
+        ImageView marmotImage = findViewById(R.id.marmot);
+        ImageView geniusImage = findViewById(R.id.mathgenius);
 
-        Button switcher = findViewById(R.id.switching_button);
-        bruhSet = true;
-        switcher.setBackgroundColor(Color.argb(255, 255, 176, 71));
+        // Bruh button red, background red, doesn't start with button
+        // Daniel button orange, background orange
+        // Marmot button green, background green
+        // genius button dark blue, background dark blue
+        Button switcher1 = findViewById(R.id.switching_button1);
+        switcher1.setBackgroundColor(Color.argb(255, 255, 176, 71));
+        Button switcher2 = findViewById(R.id.switching_button2);
+        switcher2.setBackgroundColor(Color.argb(255, 71, 255, 71));
+        Button switcher3 = findViewById(R.id.switching_button3);
+        switcher3.setBackgroundColor(Color.argb(255, 71, 71, 255));
 
         danielImage.setVisibility(View.GONE);
         mediaPlayer = MediaPlayer.create(this, R.raw.bruh_sound);
@@ -48,22 +57,22 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer.start();
             }
         });
-        switcher.setOnClickListener(View -> {
+        switcher1.setOnClickListener(View -> {
             if (bruhSet) {
                 bruhImage.setVisibility(android.view.View.GONE);
                 danielImage.setVisibility(android.view.View.VISIBLE);
                 layout.setBackgroundColor(Color.argb(255, 255, 176, 71));
-                switcher.setBackgroundColor(Color.argb(255, 255, 71, 71));
+                switcher1.setBackgroundColor(Color.argb(255, 255, 71, 71));
                 mediaPlayer.release();
                 mediaPlayer = MediaPlayer.create(this, R.raw.daniel_sound);
 
-                switcher.setText(R.string.switchBruh);
+                switcher1.setText(R.string.switchBruh);
             } else {
                 danielImage.setVisibility(android.view.View.GONE);
                 bruhImage.setVisibility(android.view.View.VISIBLE);
                 layout.setBackgroundColor(Color.argb(255, 255, 71, 71));
-                switcher.setBackgroundColor(Color.argb(255, 255, 176, 71));
-                switcher.setText(R.string.switchDaniel);
+                switcher1.setBackgroundColor(Color.argb(255, 255, 176, 71));
+                switcher1.setText(R.string.switchDaniel);
                 mediaPlayer.release();
                 mediaPlayer = MediaPlayer.create(this, R.raw.bruh_sound);
             }
