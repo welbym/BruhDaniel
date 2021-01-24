@@ -14,17 +14,27 @@ import android.widget.ImageView;
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "Main Activity";
-    private boolean bruhSet;
     private MediaPlayer mediaPlayer;
     private boolean firstTime;
+    private String buttonMessage;
+    private int buttonColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Bruh button red, background red, doesn't start with button
+        // Daniel button orange, background orange
+        // Marmot button green, background green
+        // genius button dark blue, background dark blue
+        int bruhColor = Color.argb(255, 255, 71, 71);
+        int danielColor = Color.argb(255, 255, 176, 71);
+        int marmotColor = Color.argb(255, 71, 216, 31);
+        int geniusColor = Color.argb(255, 21, 71, 255);
+
         ConstraintLayout layout = findViewById(R.id.constraintLayout);
-        layout.setBackgroundColor(Color.argb(255, 255, 71, 71));
+        layout.setBackgroundColor(bruhColor);
 
         ImageView bruhImage = findViewById(R.id.bruh);
         ImageView danielImage = findViewById(R.id.daniel);
@@ -35,27 +45,24 @@ public class MainActivity extends AppCompatActivity {
         marmotImage.setVisibility(View.GONE);
         geniusImage.setVisibility(View.GONE);
 
-        // Bruh button red, background red, doesn't start with button
-        // Daniel button orange, background orange
-        // Marmot button green, background green
-        // genius button dark blue, background dark blue
         Button switcher1 = findViewById(R.id.switching_button1);
-        switcher1.setBackgroundColor(Color.argb(255, 255, 176, 71));
+        switcher1.setBackgroundColor(danielColor);
         Button switcher2 = findViewById(R.id.switching_button2);
-        switcher2.setBackgroundColor(Color.argb(255, 71, 255, 71));
+        switcher2.setBackgroundColor(marmotColor);
         Button switcher3 = findViewById(R.id.switching_button3);
-        switcher3.setBackgroundColor(Color.argb(255, 71, 71, 255));
+        switcher3.setBackgroundColor(geniusColor);
 
         mediaPlayer = MediaPlayer.create(this, R.raw.bruh_sound);
         mediaPlayer.setOnCompletionListener(mp -> mediaPlayer.release());
 
+        buttonMessage = getResources().getString(R.string.switchBruh);
+        buttonColor = bruhColor;
         firstTime = true;
 
         bruhImage.setOnClickListener(View -> {
             if (firstTime) {
                 mediaPlayer.release();
-                mediaPlayer = MediaPlayer.create(this, R.raw.daniel_sound);
-                mediaPlayer.setOnCompletionListener(mp -> mediaPlayer.release());
+                mediaPlayer = MediaPlayer.create(this, R.raw.bruh_sound);
             }
             Log.d(TAG,"BRUH");
             if (!mediaPlayer.isPlaying()) {
@@ -67,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
             if (firstTime) {
                 mediaPlayer.release();
                 mediaPlayer = MediaPlayer.create(this, R.raw.daniel_sound);
-                mediaPlayer.setOnCompletionListener(mp -> mediaPlayer.release());
             }
             Log.d(TAG,"Damn Daniel");
             if (!mediaPlayer.isPlaying()) {
@@ -79,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
             if (firstTime) {
                 mediaPlayer.release();
                 mediaPlayer = MediaPlayer.create(this, R.raw.marmot);
-                mediaPlayer.setOnCompletionListener(mp -> mediaPlayer.release());
             }
             Log.d(TAG,"Damn Daniel");
             if (!mediaPlayer.isPlaying()) {
@@ -91,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
             if (firstTime) {
                 mediaPlayer.release();
                 mediaPlayer = MediaPlayer.create(this, R.raw.genius);
-                mediaPlayer.setOnCompletionListener(mp -> mediaPlayer.release());
             }
             Log.d(TAG,"Damn Daniel");
             if (!mediaPlayer.isPlaying()) {
@@ -101,22 +105,148 @@ public class MainActivity extends AppCompatActivity {
         });
 
         switcher1.setOnClickListener(View -> {
-            if (bruhSet) {
-                bruhImage.setVisibility(android.view.View.GONE);
+            mediaPlayer.release();
+            if (switcher1.getText().toString().equals(getResources().getString(R.string.switchDaniel))) {
+                switcher1.setText(buttonMessage);
+                switcher1.setBackgroundColor(buttonColor);
+                buttonMessage = getResources().getString(R.string.switchDaniel);
+                buttonColor = danielColor;
+                layout.setBackgroundColor(danielColor);
                 danielImage.setVisibility(android.view.View.VISIBLE);
-                layout.setBackgroundColor(Color.argb(255, 255, 176, 71));
-                switcher1.setBackgroundColor(Color.argb(255, 255, 71, 71));
-                switcher1.setText(R.string.switchBruh);
-                firstTime = true;
-            } else {
+                bruhImage.setVisibility(android.view.View.GONE);
+                marmotImage.setVisibility(android.view.View.GONE);
+                geniusImage.setVisibility(android.view.View.GONE);
+                mediaPlayer = MediaPlayer.create(this, R.raw.daniel_sound);
+            } else if (switcher1.getText().toString().equals(getResources().getString(R.string.switchBruh))) {
+                switcher1.setText(buttonMessage);
+                switcher1.setBackgroundColor(buttonColor);
+                buttonMessage = getResources().getString(R.string.switchBruh);
+                buttonColor = bruhColor;
+                layout.setBackgroundColor(bruhColor);
                 danielImage.setVisibility(android.view.View.GONE);
                 bruhImage.setVisibility(android.view.View.VISIBLE);
-                layout.setBackgroundColor(Color.argb(255, 255, 71, 71));
-                switcher1.setBackgroundColor(Color.argb(255, 255, 176, 71));
-                switcher1.setText(R.string.switchDaniel);
-                firstTime = true;
+                marmotImage.setVisibility(android.view.View.GONE);
+                geniusImage.setVisibility(android.view.View.GONE);
+                mediaPlayer = MediaPlayer.create(this, R.raw.bruh_sound);
+            } else if (switcher1.getText().toString().equals(getResources().getString(R.string.switchMarmot))) {
+                switcher1.setText(buttonMessage);
+                switcher1.setBackgroundColor(buttonColor);
+                buttonMessage = getResources().getString(R.string.switchMarmot);
+                buttonColor = marmotColor;
+                layout.setBackgroundColor(marmotColor);
+                danielImage.setVisibility(android.view.View.GONE);
+                bruhImage.setVisibility(android.view.View.GONE);
+                marmotImage.setVisibility(android.view.View.VISIBLE);
+                geniusImage.setVisibility(android.view.View.GONE);
+                mediaPlayer = MediaPlayer.create(this, R.raw.marmot);
+            } else {
+                switcher1.setText(buttonMessage);
+                switcher1.setBackgroundColor(buttonColor);
+                buttonMessage = getResources().getString(R.string.switch21);
+                buttonColor = geniusColor;
+                layout.setBackgroundColor(geniusColor);
+                danielImage.setVisibility(android.view.View.GONE);
+                bruhImage.setVisibility(android.view.View.GONE);
+                marmotImage.setVisibility(android.view.View.GONE);
+                geniusImage.setVisibility(android.view.View.VISIBLE);
+                mediaPlayer = MediaPlayer.create(this, R.raw.genius);
             }
-            bruhSet = !bruhSet;
+        });
+        switcher2.setOnClickListener(View -> {
+            mediaPlayer.release();
+            if (switcher2.getText().toString().equals(getResources().getString(R.string.switchDaniel))) {
+                switcher2.setText(buttonMessage);
+                switcher2.setBackgroundColor(buttonColor);
+                buttonMessage = getResources().getString(R.string.switchDaniel);
+                buttonColor = danielColor;
+                layout.setBackgroundColor(danielColor);
+                danielImage.setVisibility(android.view.View.VISIBLE);
+                bruhImage.setVisibility(android.view.View.GONE);
+                marmotImage.setVisibility(android.view.View.GONE);
+                geniusImage.setVisibility(android.view.View.GONE);
+                mediaPlayer = MediaPlayer.create(this, R.raw.daniel_sound);
+            } else if (switcher2.getText().toString().equals(getResources().getString(R.string.switchBruh))) {
+                switcher2.setText(buttonMessage);
+                switcher2.setBackgroundColor(buttonColor);
+                buttonMessage = getResources().getString(R.string.switchBruh);
+                buttonColor = bruhColor;
+                layout.setBackgroundColor(bruhColor);
+                danielImage.setVisibility(android.view.View.GONE);
+                bruhImage.setVisibility(android.view.View.VISIBLE);
+                marmotImage.setVisibility(android.view.View.GONE);
+                geniusImage.setVisibility(android.view.View.GONE);
+                mediaPlayer = MediaPlayer.create(this, R.raw.bruh_sound);
+            } else if (switcher2.getText().toString().equals(getResources().getString(R.string.switchMarmot))) {
+                switcher2.setText(buttonMessage);
+                switcher2.setBackgroundColor(buttonColor);
+                buttonMessage = getResources().getString(R.string.switchMarmot);
+                buttonColor = marmotColor;
+                layout.setBackgroundColor(marmotColor);
+                danielImage.setVisibility(android.view.View.GONE);
+                bruhImage.setVisibility(android.view.View.GONE);
+                marmotImage.setVisibility(android.view.View.VISIBLE);
+                geniusImage.setVisibility(android.view.View.GONE);
+                mediaPlayer = MediaPlayer.create(this, R.raw.marmot);
+            } else {
+                switcher2.setText(buttonMessage);
+                switcher2.setBackgroundColor(buttonColor);
+                buttonMessage = getResources().getString(R.string.switch21);
+                buttonColor = geniusColor;
+                layout.setBackgroundColor(geniusColor);
+                danielImage.setVisibility(android.view.View.GONE);
+                bruhImage.setVisibility(android.view.View.GONE);
+                marmotImage.setVisibility(android.view.View.GONE);
+                geniusImage.setVisibility(android.view.View.VISIBLE);
+                mediaPlayer = MediaPlayer.create(this, R.raw.genius);
+            }
+        });
+        switcher3.setOnClickListener(View -> {
+            mediaPlayer.release();
+            if (switcher3.getText().toString().equals(getResources().getString(R.string.switchDaniel))) {
+                switcher3.setText(buttonMessage);
+                switcher3.setBackgroundColor(buttonColor);
+                buttonMessage = getResources().getString(R.string.switchDaniel);
+                buttonColor = danielColor;
+                layout.setBackgroundColor(danielColor);
+                danielImage.setVisibility(android.view.View.VISIBLE);
+                bruhImage.setVisibility(android.view.View.GONE);
+                marmotImage.setVisibility(android.view.View.GONE);
+                geniusImage.setVisibility(android.view.View.GONE);
+                mediaPlayer = MediaPlayer.create(this, R.raw.daniel_sound);
+            } else if (switcher3.getText().toString().equals(getResources().getString(R.string.switchBruh))) {
+                switcher3.setText(buttonMessage);
+                switcher3.setBackgroundColor(buttonColor);
+                buttonMessage = getResources().getString(R.string.switchBruh);
+                buttonColor = bruhColor;
+                layout.setBackgroundColor(bruhColor);
+                danielImage.setVisibility(android.view.View.GONE);
+                bruhImage.setVisibility(android.view.View.VISIBLE);
+                marmotImage.setVisibility(android.view.View.GONE);
+                geniusImage.setVisibility(android.view.View.GONE);
+                mediaPlayer = MediaPlayer.create(this, R.raw.bruh_sound);
+            } else if (switcher3.getText().toString().equals(getResources().getString(R.string.switchMarmot))) {
+                switcher3.setText(buttonMessage);
+                switcher3.setBackgroundColor(buttonColor);
+                buttonMessage = getResources().getString(R.string.switchMarmot);
+                buttonColor = marmotColor;
+                layout.setBackgroundColor(marmotColor);
+                danielImage.setVisibility(android.view.View.GONE);
+                bruhImage.setVisibility(android.view.View.GONE);
+                marmotImage.setVisibility(android.view.View.VISIBLE);
+                geniusImage.setVisibility(android.view.View.GONE);
+                mediaPlayer = MediaPlayer.create(this, R.raw.marmot);
+            } else {
+                switcher3.setText(buttonMessage);
+                switcher3.setBackgroundColor(buttonColor);
+                buttonMessage = getResources().getString(R.string.switch21);
+                buttonColor = geniusColor;
+                layout.setBackgroundColor(geniusColor);
+                danielImage.setVisibility(android.view.View.GONE);
+                bruhImage.setVisibility(android.view.View.GONE);
+                marmotImage.setVisibility(android.view.View.GONE);
+                geniusImage.setVisibility(android.view.View.VISIBLE);
+                mediaPlayer = MediaPlayer.create(this, R.raw.genius);
+            }
         });
 
     }
